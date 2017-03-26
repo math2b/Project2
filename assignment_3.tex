@@ -18,7 +18,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\documentclass[paper=a4, fontsize=12pt]{scrartcl} % A4 paper and 11pt font size
 
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
@@ -39,7 +39,7 @@
 \renewcommand{\headrulewidth}{0pt} % Remove header underlines
 \renewcommand{\footrulewidth}{0pt} % Remove footer underlines
 \setlength{\headheight}{13.6pt} % Customize the height of the header
-
+\linespread{1.5}
 \numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 \numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 \numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
@@ -119,230 +119,158 @@
 %----------------------------------------------------------------------------------------
 \section{What is Machine Learning}
 
-Machine learning is defined as a type of artificial intelligence (AI) that provides computers
-with the ability to learn without being explicitly programmed.
-The term, Machine Learning may sound strange, but it is not an exaggeration to say that
-we have been taking advantage of it for our entire Google searching experience
-and also the experience purchasing items on Amazon, or selecting movies in Netflix.
-Machine learning is used at almost every part of the stack at major search engines, and
-anything that requires some sort of intelligence is often solved using machine learning.
-Spelling suggestion/correction and also search ranking system are great examples that can be solved by Machine Learning. \\
+Machine learning is defined as a type of artificial intelligence (AI) that
+provides computers with the ability to learn without being explicitly
+programmed. The term, Machine Learning may sound strange, but it is not an
+exaggeration to say that we have been taking advantage of it for our entire
+Google searching experience and also the experience purchasing items on Amazon,
+or selecting movies in Netflix. Machine learning is used at almost every part of
+the stack at major search engines, and anything that requires some sort of
+intelligence is often solved using machine learning. Spelling
+suggestion/correction and also search ranking system are great examples that can be solved by Machine Learning. \\
 
-A recommender system is one of the successful field that the concept of Machine Learning is deeply engaged with.
-An algorithm called, \textbf{Collaborative Filtering} is one that commonly used nowadays,
-and it works by building a database of preferences for items by a group of users.
-For example, a new user, Guerrero, is matched against the database to discover neighbors,
-which are other users who have historically had similar taste to Guerrero.
+A recommender system is one of the successful field that the concept of Machine
+Learning is deeply engaged with. An algorithm called,
+\textbf{Collaborative Filtering} is one that commonly used nowadays, and it works by building a
+database of preferences for items by a group of users. Fo  example, a new user,
+Guerrero, is matched against the database to discover neighbors, which are other
+users who have historically had similar taste to Guerero.
 In this specific example, the solution may be defined as providing
-a list of the best items to the user, so that the user, Guerrero could highly consider buying the recommended list of items.
-We all agree that increasing a probability of purchasing items should give a benefit to the company, and
-we can achieve this goal by using Machine Learning. \\
+a list of the best items to the user, so that the user, Guerrero could highly
+consider buying the items that recommended by the system.
+We all agree that increasing a probability of purchasing items should give a
+benefit to the company, and we can achieve this goal by using Machine Learning. \\
 
 Since Machine learning is deeply relating with numerous properties of Linear Algebra,
-we can also say that recommending the best items can be accomplished by utilizing many concepts of Linear Algebra.
+we can also say that recommending the best items can be accomplished by
+utilizing many concepts of Linear Algebra. \\
+
+In this paper, we would not address how the algorithm really works in detail,
+but will discover how the basic concepts of Linear Algebra are
+applied to one of the hottest software, a recommender system that is derived
+from Machine Learning.
 
 %------------------------------------------------
-\subsection{A relationship between Linear Algebra and Movie Recommender System}
+\section{A relationship between Linear Algebra and Movie Recommender System}
 
-Now, we want to show that Linear Algebra is highly engaging in Machine Learning by showing many properties of Linear Algebra
-are really applied to a movie recommender system
-since a movie recommender system is one of the successful application of Machine Learning.
-Before we do jump into the specific properties of Linear Algebra how it is used in a recommender system,
+Now, we want to show that Linear Algebra is highly engaging in Machine Learning
+by showing many properties of Linear Algebra are really  applied to a movie
+recommender system as a foundation concepts. Before we do jump into the specific
+properties of Linear Algebra how it is used in a recommender system,
 let us consider a problem what we really want to achieve from doing it.
 
 \bigskip
 
+\subsection{What Does A Movie Recommender System Do For Users?}
+
 Netflix completely relies on Machine Learning to build a movie recommender system, and
-the recommendations that come out from this system as an output drive \(60\%\) of Netflix's DVD rentals.
-We can think of improving the accuracy of predictions about
+the recommendations that come out from this system as an output drive \(60\%\)
+of Netflix's DVD rentals. We can think of improving the accuracy of predictions
 how much someone is going to love a movie based on their movie preferences.
-We would like to introduce an algorithm, \textbf{Collaborative Filtering} to discover
+Now, Netflix uses a well-known algorithm, called \textbf{Collaborative Filtering} to discover
 patterns in observed preference behavior (e.g. purchase history, item ratings and clikc counts) across
 community users, and to predict new preferences based on those patterns. \\
 
 We can concretize this problem using tools that we have learned in class.
 Before we do analyze how the basic concepts of \textit{Linear Algebra} are used in this application,
-let us define the problem in terms of mathematics. \\
+let us define the problem in terms of mathematical tools that we should have seen
+in class. \\
 
 Let us denote
 
 \begin{enumerate}
-	\item \(u\) is a set of users
-	\[
-		u \in \left\{ 1, \dots, U \right\}
-	\]
-	\item \(i\) is a set of items
-	\[
-		i \in \left\{ 1, \dots, M \right\}
-	\]
-	\item let \(T\) be a training set with observed,
-	preferences in terms of \(\mathbb{R}\) as \(r_{ui}\) for some user-item pairs such that \((u,i)\).
-	\[
-		r_{ui} = \mbox{e.g. purchase indicator, item rating, click count, \dots}
-	\]
+	\item \(X\) is a set of users
+	\item \(S\) is a set of movies
+  \item \(R\) is a set of ratings, that should be \(r_{ui}\) for some user-movie
+    pairs such that \((u,i)\).
+  \item \(U\) is a linear transformation that takes two vectors spaces \(X\) and
+    \(S\) as an input, and generates a set of ratings \(R\).
+  \end{enumerate}
 
-	Our goal is that predicting unobserved preferences, or testing set \(Q\) with pairs such that \[(u,i) \not\subset T\]
-	Based on those definitions, all we have to do is that filling numbers in unknown entries of sparse preference matrix.
-	The rows indicate a number of users and columns indicate a number of items.
+	Our primary goal is that building a brand new set of predicted ratings for
+  each user such that 
+  \[
+    U : X \times S \arrow{} R
+  \]
+
+  As users give more ratings on movies, more accurated ratings will be offered
+  to users by the Collaborative Filtering Algorithm.
+
+  \section{A Relationship between Linear Algebra and Collaborative Filtering}
+
+  As we have already introduced an idea that basic concepts of Linear Algebra are
+  indispensable foundation to have Collaborative Filtering Algorithm, we would
+  like to analyze how these concepts are really used in the algorithm. We are
+  going to look at a few key concepts of Linear Algebra to realize how they are
+  deeply connected:
+  \begin{enumerate}
+  \item Linear Transformation
+  \item Linear Combination
+  \item Basis and Dimension
+  \item Nonsingularity
+  \end{enumerate}
+
+  The other fundamental concepts like a set, a matrix, a vector space and other
+  tools like a matrix multiplication and matrix transpose are also significant
+  to discover the deep engagement with the algorithm, but we find that these
+  concepts are so natrual when it comes to prove the relationship between Linear
+  Algebra and the Collaborative Filtering Algorithm. They will be frequently
+  appearing all over the section. \\
+
+  \subsection{Linear Transformation}
+
+  The first essential idea that makes a relationship between the algorithm and
+  Linear Algebra should be Linear Transformation since it defines a function. To
+  give predicted ratings for community users as an output, we need an input!
+
+  As you may have already noticed, it is defined as
+  \[
+    U : X \times S \arrow{} R
+  \]
+
+  \(U\) is a linear transformation that takes \(X \times S\) as an input, which
+  includes two vector spaces; one is a set of users and another one is a set of
+  movies. Multiplying these two vectors allows to find out the third vector
+  space, namely a set of ratings beloing to each users in a set of users. \\
+
+  The type of ratings that we are using in this paper would be divided into two;
+  one is a rating that a user granted in person, and another rating should be a
+  predicted rating that granted by the Collaborative Filtering Algorithm. This
+  brief defintion may bring us to realize that we may have a matrix with unknown
+  ratings, which are eventually known as a natrual number like \([0,5]\), but
+  they are up on the same matrix. We can look this matrix so that we can
+  understand what the algorithm is really trying to accomplish. \\
+
 	\[
-		\mathbf{R} =
+		\mathbf{M} =
 		\matxxx
 		{? & ? & 1 & \dots & 4}
 		{3 & ? & ? & \dots & ?}
 		{? & 5 & ? & \dots & 5}
 	\]
 
-	Since the real-valued unknown ratings are correlated with other pair of item-users,
-	we can make solutions to this problem by using the ideas that we have learned in the class.
-	(Notice that we are really seeing a matrix that defines a relationship between users and items!)
+  Each row indicates a user, each column indicates a movie and each entry in the
+  matrix indicates a rating that the user directly granted. Then, the entries
+  filled in a question mark are the ratings that eventually the algorithm would
+  find out, and it will be offered to users such that
+  \[
+    r_{\mathbf{x}} = \left\{5,5,5,4,3,1,\dots,1\right\}
+  \]
 
-	As you may have already noticed, the problem is already defined as in terms of many ideas in Linear Algebra since
-	users and items are really a vector space respectively, and they are having a linear relation.
-	Though this is an explicit relationship between a recommender system and Linear Algebra,
-	The following pages will show more insights that how those two complicated terms are correlated.
+  where \(r_x\) is the vector the user \(\mathbf{x}\)'s predicted ratings. This
+  notion defines the problem simpler as all we have to do is that filling
+  numbers in unknown entries of sparse matrix.
 
-\end{enumerate}
+  % ----------------------------------------------------------------------------------------
+  %	Conclusion
+  % ----------------------------------------------------------------------------------------
 
+  \section{Conclusion}
 
-\section{Set}
-By the definition, set means "a set is a group of elements determined by one condition. Elements should be able to identify whether an element is contained in the collection or not, and whether two elements from the set are equal or not equal to each other."
+  Why Linear Algebra is a fundamental element in Machine Learning? How concepts of
+  Linear Algebra are used for Recommender system?
+  Basis, Linear Transformation, a set, a matrix?
 
-
-In Recommendation system, the set could be the group of movie genre, searching key word, the rate of purchase, etc. For example, the set could be described as:
-User A
-\(
-\begin{bmatrix}
-5\\5\\?\\0\\0
-\end{bmatrix}
-\) User B \(
-\begin{bmatrix}
-5\\?\\4\\0\\0
-\end{bmatrix}
-\) User C \(
-\begin{bmatrix}
-0\\?\\0\\5\\5\\
-\end{bmatrix}
-\) User D  \(
-\begin{bmatrix}
-0\\0\\?\\4\\?
-\end{bmatrix}
-\)
-
-\bigskip
-In recommendation system, the feature set is necessary. The feature set is the set which is used as “input”. For example, if we make two feature sets: (Romance), (Action), they show how much ratio occupy for each movie.
-
-Feature Set A (action) :
-\(
-\begin{bmatrix}
-0.9\\1.0\\0.99\\0.1\\0
-\end{bmatrix}
-\) Feature Set B (romance):
-\(
-\begin{bmatrix}
-0\\0.01\\0\\1.0\\0.9
-\end{bmatrix}
-\)
-
-%--------------------------------------------------------------------------------
-\bigskip
-\section{Matrix}
-By the Definition, matrix means "A matrix is an array of numbers or expressions arranged in rectangular shape. In a matrix, the horizontal line is called as a row, and vertical line is called as a column."
-
-
-\bigskip
-In Recommendation system, column and row could be expressed as users and products or users and rating. For example, we can make the matrix with the sets which are above.
-\[
-\begin{bmatrix}
-Movie & A & B & C & D & (Romance) & (action) \\
-Movie1 & 5 & 5 & 0 & 0 & 0.9 & 0 \\
-Movie2 & 5 & ? & ? & 0 & 1.0 & 0.01\\
-Movie3 & ? & 4 & 0 & ? & 0.99 & 0 \\
-Movie4 & 0 & 0 & 5 & 4 & 0.1 & 1.0 \\
-Movie5 & 0 & 0 & 5 & ? & 0 & 0.9
-\end{bmatrix}
-\]
-%--------------------------------------------------------------------------------
-\bigskip
-\section{Transpose}
-
-By the Definition, Transpose is that the element at row and column in the original matrix is placed at row and column of the transpose.
-
-
-
-The reason why transpose is necessary is because, in multiplication of matrix, the column of one matrix and the row of another matrix should be the same. Thus, the transpose is necessary.
-
-
-
-For example, when we estimate the undecided point by user, we need to calculate it. When we calculate it, if we do not transpose the matrix, it will be (1*3) * ( 1*3). However, this multiplication cannot be possible by Theorem of Multiplication. So, we need to do transpose it in order to make (1*3) * (3 *1).
-\(
-x^{movie 3} =
-\begin{bmatrix}
-1\\0.99\\0\\
-\end{bmatrix}
-\theta ^{A} = \begin{bmatrix}
-0 \\ 5 \\ 0
-\end{bmatrix}
-\)
-
-For finding the estimate rating for movie 3
-\(x^{movie3} \theta ^{A^T}\)
-\[
-=
-\begin{bmatrix}
-1\\0.99\\0\\
-\end{bmatrix}
-*
-\begin{bmatrix}
-0 & 5 & 0
-\end{bmatrix}
-=
-0 + 4.95 + 0 = 4.95
-\]
-
-Therefore, we can estimate user A may give 4.95 points for movie 3.
-
-
-%------------------------------------------------
-
-\subsubsection{Heading on level 3 (subsubsection)}
-
-\lipsum[3] % Dummy text
-
-\paragraph{Heading on level 4 (paragraph)}
-
-\lipsum[6] % Dummy text
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 2
-%----------------------------------------------------------------------------------------
-
-\section{Lists}
-
-%------------------------------------------------
-
-\subsection{Example of list (3*itemize)}
-\begin{itemize}
-	\item First item in a list
-		\begin{itemize}
-		\item First item in a list
-			\begin{itemize}
-			\item First item in a list
-			\item Second item in a list
-			\end{itemize}
-		\item Second item in a list
-		\end{itemize}
-	\item Second item in a list
-\end{itemize}
-
-%------------------------------------------------
-
-\subsection{Example of list (enumerate)}
-\begin{enumerate}
-\item First item in a list
-\item Second item in a list
-\item Third item in a list
-\end{enumerate}
-
-%----------------------------------------------------------------------------------------
+  % ----------------------------------------------------------------------------------------
 
 \end{document}
