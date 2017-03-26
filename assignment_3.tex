@@ -24,6 +24,7 @@
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
 \usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{blkarray}
 
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
 
@@ -168,7 +169,7 @@ the recommendations that come out from this system as an output drive \(60\%\)
 of Netflix's DVD rentals. We can think of improving the accuracy of predictions
 how much someone is going to love a movie based on their movie preferences.
 Now, Netflix uses a well-known algorithm, called \textbf{Collaborative Filtering} to discover
-patterns in observed preference behavior (e.g. purchase history, item ratings and clikc counts) across
+patterns in observed preference behavior (e.g. purchase history, item ratings and click counts) across
 community users, and to predict new preferences based on those patterns. \\
 
 We can concretize this problem using tools that we have learned in class.
@@ -239,7 +240,7 @@ Let us denote
   brief defintion may bring us to realize that we may have a matrix with unknown
   ratings, which are eventually known as a natrual number like \([0,5]\), but
   they are up on the same matrix. We can look this matrix so that we can
-  understand what the algorithm is really trying to accomplish. \\
+  understand what the algorithm is really trying to accomplish.
 
 	\[
 		\mathbf{M} =
@@ -257,9 +258,67 @@ Let us denote
     r_{\mathbf{x}} = \left\{5,5,5,4,3,1,\dots,1\right\}
   \]
 
-  where \(r_x\) is the vector the user \(\mathbf{x}\)'s predicted ratings. This
+  where \(r_\mathbf{x}\) is the vector of the user \(\mathbf{x}\)'s predicted ratings. This
   notion defines the problem simpler as all we have to do is that filling
-  numbers in unknown entries of sparse matrix.
+  numbers in unknown entries of sparse matrix, and emitting the matrix as an
+  output.
+
+  \subsection{Linear Combination}
+
+  You might have a question how we come up with a pretty good predicted rating
+  based on the ratings that users granted. Based on the ratings of users, the
+  algorithm predicts each sparse entry in the matrix by firstly finding similar
+  users to the user, and predicting the rating with their feature sets. Lets
+  clarify each step and eventually let us discover how Linear Combination is
+  applied to.
+
+  Let us denote
+  \begin{enumerate}
+  \item \(r_{\mathbf{x}}\) is the vector of user \(\mathbf{x}\)'s ratings
+  \item \(N\) is the set of \(\mathbf{k}\) users most similar to \(\mathbf{x}\)
+    who have reated movie \(\mathbf{i}\)
+  \end{enumerate}
+
+  Then we can define \(r_{xi}\) as
+  \[
+    \begin{split}
+      r_{xi} & = \frac{1}{k} \sum_{y \in N} r_{yi} \\
+      r_{xi} & = \frac{\sum_{y \in N} S_{xy} r_{yi}}{\sum_{u \in N} S_{xy}}
+    \end{split}
+  \]
+
+  Also, the similarity can be shown as
+  \[
+    S_{xy} = sim(x,y)
+  \]
+
+  Based on this function, we can find the user group that has a similar
+  preference to the target user and we can predict some ratings.
+
+  \[
+    \begin{blockarray}{cccccc}
+      \begin{block}{(ccccc)c}
+        3 & 5 & 3 & \mathbf{?} & 4 & sim(1,m) = 1 \\
+        0 & 1 & 0 & 0 & 1 & sim(1,m) = -0.18 \\
+        0 & 0 & 1 & 2 & 5 & sim(1,m) = \mathbf{0.41} \\
+        0 & 0 & 0 & 5 & 2 & sim(1,m) = -0.31 \\
+        0 & 0 & 0 & 3 & 2 & sim(1,m) = \mathbf{0.59} \\
+      \end{block}
+    \end{blockarray}
+  \]
+
+  If we would like to know the rating, \(r_{14} = ?\), and we know the
+  similarities. Then, we can say that \(r_{14}\) can be found by a linear
+  combination of two vectors such that
+  \[
+    \begin{split}
+      r_{14} & = \alpha_1 r_{34} + \alpha_2 r_{54} \\
+      r_{14} & = \frac{(0.41)(2) + (0.59)(3)}{(0.41 + 0.59)} \\
+      r_{14} & = 2.6
+    \end{split}
+  \]
+
+  We can predict the rating by taking weighted average.
 
   % ----------------------------------------------------------------------------------------
   %	Conclusion
