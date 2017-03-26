@@ -79,6 +79,12 @@
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
 
+\newcommand{\matx}[1] {
+\begin{bmatrix}
+  #1 \\
+\end{bmatrix}
+}
+
 \newcommand{\matxx}[2] {
 \begin{bmatrix}
   #1 \\
@@ -183,7 +189,9 @@ but will discover how the basic concepts of Linear Algebra are
 applied to one of the hottest software, a recommender system that is derived
 from Machine Learning.
 
-%------------------------------------------------
+% ------------------------------------------------
+\pagebreak
+
 \section{A relationship between Linear Algebra and Movie Recommender System}
 
 Now, we want to show that Linear Algebra is highly engaging in Machine Learning
@@ -228,6 +236,8 @@ Let us denote
 
   As users give more ratings on movies, more accurated ratings will be offered
   to users by the Collaborative Filtering Algorithm.
+
+  \pagebreak
 
   \section{A Relationship between Linear Algebra and Collaborative Filtering}
 
@@ -353,10 +363,95 @@ Let us denote
   We can predict the rating by taking weighted average, that is really a linear
   combination of other ratings that granted by another gorup of users.
 
+  \subsection{Basis and Dimension}
+  
+  Let us say there are \(n\) number of movies and \(n\) number of users. Each user, who
+  has already seen the movie, can rate the movie once, ranging from 0 to 5. This
+  can be shown in a table like below:
+
+  \[
+    \begin{blockarray}{cccccc}
+      u_1 & u_2 & u_3 & \dots & u_n \\
+      \begin{block}{(ccccc)c}
+        1 & ? & ? & 2 & ? & m_1 \\
+        3 & ? & ? & ? & 1 & m_2 \\
+        ? & 4 & 4 & 3 & 3 & \dots \\
+        5 & ? & ? & ? & 2 & m_n \\
+      \end{block}
+    \end{blockarray}
+  \]
+
+  Not all users have watched the existing movies, so the table is incomplete.
+  This table can be also written in a set of n x m vectors. Let V be a set
+  containing vectors of users, movies, and ratings. Then,
+
+  \[
+    \begin{split}
+      V & =
+      \left\{
+        \matxxx{m_1}{u_1}{r_1}, \dots, \matxxx{m_n}{u_n}{r_n}
+      \right\} \\
+    \end{split}
+  \]
+  Or,
+  \[
+    V = \left\{ v_1, v_2, v_3, \dots, v_n \right\}
+  \]
+
+  Since the matrix is incomplete, this is a sparse matrix. A sparse matrix
+  contains empty values, in this case, ratings. Note that empty values \textemdash the
+  question marks on the matrix \textemdash cannot be replaced with zeroes as
+  zeroes will be taken as 0 out of 5 ratings. \\
+
+  In order to fill these empty values, there exists several ways: Jaccard
+  similarity measure, cosine similarity measure, and Pearson correlation
+  coefficient, most commonly. Further explanations about these procedures are
+  omitted in this section for simplicity. One of the procedures are used to
+  predict ratings and looped to fill all the empty values. Once they are all
+  filled, they are no longer a sparse matrix and can be graphed in a
+  3-dimensional space with \(x, y, \) and \(z\)-axis (movies, users, and ratings).
+  Then the set \(V\) can be said to be a vector space (\textbf{Definition VS}) that is 2)
+  linearly independent and 3) a spanning set of its dimension because:
+
+  \begin{enumerate}
+  \item Each user can only leave one rating per movie - each vectors are
+    unique and cannot be represented by a linear combination of other vectors
+  \item Each vector in the set \(V\) can be represented in the 3-dimensional
+    space \(\mathbb{R}^{3}\).
+  \end{enumerate}
+
+  A basis is the minimum set of vectors that spans the subspace, which requires
+  the set to be linearly independent and a spanning set. Since the set \(V\) met
+  the requirements, \(V\) is a basis for \(\mathbb{R}^3\). By \textbf{Definition
+    D}, the dimension of \(V\) is \(m\), or \(\mbox{dim}(V) = m\).
+
+  \subsection{Nonsingularity}
+
+  In Basis and Dimension section, there were n number of users and n number of
+  movies. However, most of the times, this cannot be true \textemdash one value
+  outnumbers the other. For example, Netflix has about 480,000 users and 17,770 movies.
+  According to \textbf{Definition NM}, a matrix has to be a square matrix even before
+  checking checking for its trivial solution. Then is it possible to make the
+  matrix even close to a square? No, it is impossible! Yet there are ways to
+  reduce values, making the matrix closer to a square one. This involves complex
+  multiple steps and algorithms such as singular value decomposition (SVD) and
+  regularization of data. Even without deeper understandings of them, it seems
+  obvious why it would be easier for the program to have a square, nonsingular
+  matrix. As the vector starts out sparse, the main goal is to fill the missing
+  entries based on the given information, in this case, ratings submitted by
+  other users. However, if, as the case of Netflix, the number of users far
+  outnumbers the the umber of movies, the set of vectors will always have
+  linearly dependent vectors. This means that the prediction, made by one of the
+  procedures mentioned in the earlier section, will more likely to have errors
+  which will result in falsely recommending a movie that an user does not want
+  to watch. Thus, keeping the nonsigularity of the system is idealy the key to
+  lower the possible errors.
+
   % ----------------------------------------------------------------------------------------
   %	Conclusion
   % ----------------------------------------------------------------------------------------
-
+  \pagebreak
+  
   \section{Conclusion}
 
   We have discovered that there is a strong relationship between the basic
@@ -375,7 +470,7 @@ Let us denote
   \begin{center}
     \begin{tikzpicture}
       [node distance=.8cm,
-      start chain=going below,]
+      start chain=1 going below, start chain=2 going below]
       \node[punktchain, join] (la) {Linear Algebra};
       \node[punktchain, join] (cf) {Collaborative Filtering};
       \node[punktchain, join] (rs) {Recommender System};
