@@ -18,7 +18,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[paper=a4, fontsize=12pt]{scrartcl} % A4 paper and 11pt font size
+\documentclass[paper=letter, fontsize=12pt]{scrartcl} % Letter paper and 11pt font size
 
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
@@ -159,65 +159,51 @@
 \section{What is Machine Learning}
 
 Machine learning is defined as a type of artificial intelligence (AI) that
-provides computers with the ability to learn without being explicitly
-programmed. The term, Machine Learning may sound strange, but it is not an
+provides computers the ability to learn without being explicitly
+programmed. The term, machine learning, may sound strange, but it is not an
 exaggeration to say that we have been taking advantage of it for our entire
-Google searching experience and also the experience purchasing items on Amazon,
-or selecting movies in Netflix. Machine learning is used at almost every part of
-the stack at major search engines, and anything that requires some sort of
-intelligence is often solved using machine learning. Spelling
-suggestion/correction and also search ranking system are great examples that can be solved by Machine Learning. \\
+Google searching experiences, as well as the experiences of purchasing items on Amazon or selecting movies on Netflix. Machine learning is used at almost every part of the stack at major search engines, and anything that requires some sort of
+intelligence is often solved using machine learning. Spelling suggestions/auto-corrections and the search ranking system are great examples of machine learning. \\
 
-A recommender system is one of the successful field that the concept of Machine
-Learning is deeply engaged with. An algorithm called,
-\textbf{Collaborative Filtering} is one that commonly used nowadays, and it works by building a
-database of preferences for items by a group of users. Fo  example, a new user,
-Guerrero, is matched against the database to discover neighbors, which are other
-users who have historically had similar taste to Guerero.
-In this specific example, the solution may be defined as providing
-a list of the best items to the user, so that the user, Guerrero could highly
-consider buying the items that recommended by the system.
-We all agree that increasing a probability of purchasing items should give a
-benefit to the company, and we can achieve this goal by using Machine Learning. \\
+A recommender system is one of the successful fields that the concept of machine
+learning is deeply engaged in. An algorithm called
+\textbf{collaborative filtering} is the one that is commonly used today, and it works by building a database of preferences entered by a group of users. For example, a new user Guerrero has matching database with other users, who has historically had a similar taste to Guerrero.
+In this specific example, the solution may be defined by providing
+a list of the best matching items to the user, so that the user Guerrero could
+consider buying the items recommended by the system.
+We all agree that increasing the probability of purchasing items will bring
+profits to the company, and we can achieve this goal by through machine learning. \\
 
-Since Machine learning is deeply relating with numerous properties of Linear Algebra,
-we can also say that recommending the best items can be accomplished by
-utilizing many concepts of Linear Algebra. \\
+Since machine learning is deeply related to numerous properties of linear algebra,
+we can say that recommending the best items can be accomplished by
+utilizing many concepts of linear algebra. \\
 
-In this paper, we would not address how the algorithm really works in detail,
-but will discover how the basic concepts of Linear Algebra are
-applied to one of the hottest software, a recommender system that is derived
-from Machine Learning.
+In this paper, we will not address how the algorithms work in detail,
+but will discover how the basic concepts of linear algebra are
+applied to one of the hottest software system derived from machine learning \textendash the recommender system.
 
 % ------------------------------------------------
 \pagebreak
 
 \section{A relationship between Linear Algebra and Movie Recommender System}
 
-Now, we want to show that Linear Algebra is highly engaging in Machine Learning
-by showing many properties of Linear Algebra are really  applied to a movie
-recommender system as a foundation concepts. Before we do jump into the specific
-properties of Linear Algebra how it is used in a recommender system,
-let us consider a problem what we really want to achieve from doing it.
+We want to show that linear algebra is highly engaged in machine learning
+by showing the application of the fundamental concepts and properties of linear algebra in a movie recommender system. Before we jump into the specific
+properties of linear algebra used in the recommender system,
+let us consider a problem what we really want to achieve from doing so.
 
 \bigskip
 
 \subsection{What Does A Movie Recommender System Do For Users?}
 
-Netflix completely relies on Machine Learning to build a movie recommender system, and
-the recommendations that come out from this system as an output drive \(60\%\)
-of Netflix's DVD rentals. We can think of improving the accuracy of predictions
-how much someone is going to love a movie based on their movie preferences.
-Now, Netflix uses a well-known algorithm, called \textbf{Collaborative Filtering} to discover
-patterns in observed preference behavior (e.g. purchase history, item ratings and click counts) across
-community users, and to predict new preferences based on those patterns. \\
+Netflix completely relies on machine learning to build a movie recommender system, and the recommendations that come out from this system makes \(60\%\)
+of Netflix's total DVD rentals. Then the accuracy of predictions directly relates to the probability of the users purchasing movies solely based on recommendations.
+Now, Netflix uses a well-known algorithm called \textbf{collaborative filtering} to discover patterns in observed preference behaviors (e.g. purchase history, item ratings, click counts, etc.) across the community and to predict new preferences based on those patterns. \\
 
-We can concretize this problem using tools that we have learned in class.
-Before we do analyze how the basic concepts of \textit{Linear Algebra} are used in this application,
-let us define the problem in terms of mathematical tools that we should have seen
-in class. \\
+We can concretize this problem using materials we have learned previously in class.
+Before we analyze how the basic concepts of \textit{linear algebra} are used in this application, let us define a problem in terms of mathematical tools. \\
 
-Let us denote
+Let's denote
 
 \begin{enumerate}
 	\item \(X\) is a set of users
@@ -228,24 +214,22 @@ Let us denote
     \(S\) as an input, and generates a set of ratings \(R\).
   \end{enumerate}
 
-	Our primary goal is that building a brand new set of predicted ratings for
-  each user such that 
+	Our primary goal is to build a brand new set of predicted ratings for
+  each user such that
   \[
     U : X \times S \arrow{} R
   \]
 
-  As users give more ratings on movies, more accurated ratings will be offered
-  to users by the Collaborative Filtering Algorithm.
+  As users give more ratings on movies, more accurate ratings will be offered
+  to users by the collaborative filtering algorithm.
 
   \pagebreak
 
   \section{A Relationship between Linear Algebra and Collaborative Filtering}
 
-  As we have already introduced an idea that basic concepts of Linear Algebra are
-  indispensable foundation to have Collaborative Filtering Algorithm, we would
-  like to analyze how these concepts are really used in the algorithm. We are
-  going to look at a few key concepts of Linear Algebra to realize how they are
-  deeply connected:
+  As we have already introduced the idea of basic concepts of linear algebra are an
+  indispensable foundation to the collaborative filtering algorithm, we will analyze how these concepts are applied in the algorithm. We will look at few key concepts of linear algebra to realize how they are connected:
+
   \begin{enumerate}
   \item Linear Transformation
   \item Linear Combination
@@ -254,16 +238,11 @@ Let us denote
   \end{enumerate}
 
   The other fundamental concepts like a set, a matrix, a vector space and other
-  tools like a matrix multiplication and matrix transpose are also significant
-  to discover the deep engagement with the algorithm, but we find that these
-  concepts are so natrual when it comes to prove the relationship between Linear
-  Algebra and the Collaborative Filtering Algorithm. They will be frequently
-  appearing all over the section. \\
+  tools like a matrix multiplication and matrix transpose are also significant, but we found that these concepts are already implemented in the subjects mentioned. They will frequently appear in later sections. \\
 
   \subsection{Linear Transformation}
 
-  The first essential idea that makes a relationship between the algorithm and
-  Linear Algebra should be Linear Transformation since it defines a function. To
+  The first essential idea that relates the algorithm and linear algebra can be linear transformation since it defines a function. To
   give predicted ratings for community users as an output, we need an input!
 
   As you may have already noticed, it is defined as
@@ -274,13 +253,13 @@ Let us denote
   \(U\) is a linear transformation that takes \(X \times S\) as an input, which
   includes two vector spaces; one is a set of users and another one is a set of
   movies. Multiplying these two vectors allows to find out the third vector
-  space, namely a set of ratings beloing to each users in a set of users. \\
+  space, namely a set of ratings belonging to each users in a set of users. \\
 
   The type of ratings that we are using in this paper would be divided into two;
-  one is a rating that a user granted in person, and another rating should be a
-  predicted rating that granted by the Collaborative Filtering Algorithm. This
-  brief defintion may bring us to realize that we may have a matrix with unknown
-  ratings, which are eventually known as a natrual number like \([0,5]\), but
+  one is a rating that a user gave, and another rating should be the
+  predicted rating that was granted by the collaborative filtering algorithm. This
+  brief definition may bring us to realize that we may have a matrix with unknown
+  ratings, which will eventually be assigned with natural numbers like \([0,5]\), but
   they are up on the same matrix. We can look this matrix so that we can
   understand what the algorithm is really trying to accomplish.
 
@@ -309,10 +288,7 @@ Let us denote
 
   You might have a question how we come up with a pretty good predicted rating
   based on the ratings that users granted. Based on the ratings of users, the
-  algorithm predicts each sparse entry in the matrix by firstly finding similar
-  users to the user, and predicting the rating with their feature sets. Lets
-  clarify each step and eventually let us discover how Linear Combination is
-  applied to.
+  algorithm predicts each sparse entry in the matrix by firstly finding similar community users to the user, and predicting the rating with their feature sets. Lets clarify each step and discover how linear combination is applied.\\
 
   Let us denote
   \begin{enumerate}
@@ -361,10 +337,10 @@ Let us denote
   \]
 
   We can predict the rating by taking weighted average, that is really a linear
-  combination of other ratings that granted by another gorup of users.
+  combination of other ratings that granted by another group of users.
 
   \subsection{Basis and Dimension}
-  
+
   Let us say there are \(n\) number of movies and \(n\) number of users. Each user, who
   has already seen the movie, can rate the movie once, ranging from 0 to 5. This
   can be shown in a table like below:
@@ -382,7 +358,7 @@ Let us denote
   \]
 
   Not all users have watched the existing movies, so the table is incomplete.
-  This table can be also written in a set of n x m vectors. Let V be a set
+  This table can be also written in a set of n x n vectors. Let V be a set
   containing vectors of users, movies, and ratings. Then,
 
   \[
@@ -393,9 +369,11 @@ Let us denote
       \right\} \\
     \end{split}
   \]
+  \begin{center}
   Or,
+  \end{center}
   \[
-    V = \left\{ v_1, v_2, v_3, \dots, v_n \right\}
+    V = \left\{ v_1, v_2, v_3, \dots, v_m \right\}
   \]
 
   Since the matrix is incomplete, this is a sparse matrix. A sparse matrix
@@ -427,11 +405,11 @@ Let us denote
 
   \subsection{Nonsingularity}
 
-  In Basis and Dimension section, there were n number of users and n number of
+  In the previous section, there were n number of users and n number of
   movies. However, most of the times, this cannot be true \textemdash one value
   outnumbers the other. For example, Netflix has about 480,000 users and 17,770 movies.
   According to \textbf{Definition NM}, a matrix has to be a square matrix even before
-  checking checking for its trivial solution. Then is it possible to make the
+  checking for its trivial solution. Then is it possible to make the
   matrix even close to a square? No, it is impossible! Yet there are ways to
   reduce values, making the matrix closer to a square one. This involves complex
   multiple steps and algorithms such as singular value decomposition (SVD) and
@@ -451,7 +429,7 @@ Let us denote
   %	Conclusion
   % ----------------------------------------------------------------------------------------
   \pagebreak
-  
+
   \section{Conclusion}
 
   We have discovered that there is a strong relationship between the basic
